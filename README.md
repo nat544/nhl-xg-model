@@ -42,11 +42,10 @@ which takes 2-3 minutes to fetch — increase `NUM_DAYS` for a bigger sample
 
 Goal rate in sample: ~5.0% (consistent with real NHL shooting percentages).
 
-**The logistic regression baseline is not worse than XGBoost here** — if
-anything it edges it out slightly. That's a legitimate result: with
-only 5-6 well-chosen key features (distance, angle, game time, score state,
+**The logistic regression baseline is comparable to XGBoost here**. That's a surprising, yet legitimate result: with
+5-6 well-chosen key features (distance, angle, game time, score state,
 strength state), the relationship to goal probability is fairly smooth and
-close to linear in log-odds space, which is exactly what logistic regression
+close to linear in log-odds space, which is what logistic regression
 is built to capture. Gradient boosting's advantage shows up more with larger
 feature sets or messier, more interaction-heavy relationships. 
 
