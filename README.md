@@ -33,6 +33,17 @@ The notebook pulls a 2-week window by default (~100 games, ~12,000 shots),
 which takes 2-3 minutes to fetch — increase `NUM_DAYS` for a bigger sample
 (a full season is roughly 180 days), or decrease it for a faster run.
 
+## Testing
+
+```bash
+pytest tests/
+```
+
+26 unit tests cover the pure logic that doesn't require live network calls:
+the shot-distance/angle geometry, strength-state parsing, game-clock
+conversion, and the play-by-play extraction/score-tracking logic (using a
+small hand-built play-by-play fixture rather than hitting the live API).
+
 ## Results (sample run, ~12,000 shots from ~100 games, Jan 1-14, 2024)
 
 | Model | ROC-AUC | Log loss | Brier score |
