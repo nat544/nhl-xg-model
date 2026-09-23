@@ -59,12 +59,12 @@ law-of-large-numbers convergence check).
 
 Goal rate in sample: ~5.0% (consistent with real NHL shooting percentages).
 
-**The logistic regression baseline is comparable to XGBoost here**. That's a surprising, yet legitimate result: with
-5-6 well-chosen key features (distance, angle, game time, score state,
-strength state), the relationship to goal probability is fairly smooth and
-close to linear in log-odds space, which is what logistic regression
-is built to capture. Gradient boosting's advantage shows up more with larger
-feature sets or messier, more interaction-heavy relationships. 
+**The logistic regression baseline is comparable to XGBoost here.** With 5-6
+well-chosen key features (distance, angle, game time, score state, strength
+state), the relationship to goal probability is fairly smooth and close to
+linear in log-odds space, which is what logistic regression captures.
+Gradient boosting's advantage shows up more with larger feature sets or
+messier, more interaction-heavy relationships.
 
 ## Monte Carlo simulation
 
