@@ -21,6 +21,10 @@ Data comes directly from the NHL's public play-by-play API.
 4. **`src/visualize.py`** — plots shot locations colored by predicted xG, and
    a cumulative-xG-over-game-time chart showing when each team generated
    their scoring chances.
+5. **`src/simulate.py`** — Monte Carlo simulation: redraws each shot as an
+   independent Bernoulli(xG) trial thousands of times to get a distribution
+   of possible final scores for a game, separating shot quality from the
+   single result that actually happened.
 
 ## Running it
 
@@ -39,10 +43,12 @@ which takes 2-3 minutes to fetch — increase `NUM_DAYS` for a bigger sample
 pytest tests/
 ```
 
-26 unit tests cover the pure logic that doesn't require live network calls:
+34 unit tests cover the pure logic that doesn't require live network calls:
 the shot-distance/angle geometry, strength-state parsing, game-clock
-conversion, and the play-by-play extraction/score-tracking logic (using a
-small hand-built play-by-play fixture rather than hitting the live API).
+conversion, the play-by-play extraction/score-tracking logic (using a
+small hand-built play-by-play fixture rather than hitting the live API),
+and the Monte Carlo simulation (edge cases, win-probability math, and a
+law-of-large-numbers convergence check).
 
 ## Results (sample run, ~12,000 shots from ~100 games, Jan 1-14, 2024)
 
@@ -59,6 +65,18 @@ strength state), the relationship to goal probability is fairly smooth and
 close to linear in log-odds space, which is what logistic regression
 is built to capture. Gradient boosting's advantage shows up more with larger
 feature sets or messier, more interaction-heavy relationships. 
+
+## Monte Carlo simulation
+
+Each shot is treated as an independent Bernoulli(xG) trial. Redrawing every
+shot in a game 10,000 times gives a distribution of possible final scores,
+which separates *who generated the better scoring chances* from *who won*.
+
+On one sample game (actual result: Home 3, Away 0), the simulation gave the
+away team a higher win probability (53.8% vs. 27.6% home, 18.6% tie) based
+on shot quality alone, and placed the actual result at the 98th percentile
+of simulated outcomes — a highly favorable result for the home team relative
+to the shots they actually generated.
 
 
 
